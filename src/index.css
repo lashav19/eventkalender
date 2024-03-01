@@ -7,7 +7,27 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+*{
+  transition: .25s ease;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.rounded-5{
+  border-radius: 20px;
+}
+
+.rounded-4{
+  border-radius: 10px;
+}
+
+.eventcard{
+  width: 100%;
+}
+
+.eventcard:hover{
+  transform: scale(1.03);
 }
