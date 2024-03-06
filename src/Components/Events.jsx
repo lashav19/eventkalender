@@ -1,16 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Link } from "react-router-dom";
 import EventCard from '../Modules/EventCard'; // Adjust the import path accordingly
+import Logger from 'simple-console-logger';
+Logger.configure({level: 'debug'});
 
 export default function FetchEvents() {
   const [events, setEvents] = useState([]);
   const [errors, setErrors] = useState(false)
 
   useEffect(() => {
-    fetch('http://127.0.0.1:3001/api/events')
+
+    fetch('/api/events',)
       .then(response => response.json())
       .then(data => {
         if (typeof data === 'object' && data !== null) {
-          const eventsArray = Object.values(data); // Convert object values to array
+          const eventsArray = Object.keys(data).map(key => ({ id: key, ...data[key] }));
+          console.log(data)
           setEvents(eventsArray); // Set the fetched data into the component state
         } else {
           console.error('Fetched data is not an object:', data);
@@ -24,14 +29,21 @@ export default function FetchEvents() {
 
   return (
     <>
+      <div className="container">
       {events.map(event => (
-        <EventCard
-        key={event.id} // Assuming each event has a unique id, use it as the key
+        <>
+         <Link to={`/event/${event.id}`} className="text-decoration-none">
+         <EventCard
+        key={event.id}
         text={event.name} // Assigning the event name to text prop
         place={event.place} // Assigning the event place to place prop
         />
+         </Link>
+        
+        </>
       ))}
       {errors ? <><h2 className='m-5'>An error has occured</h2></> : false}
+      </div>
 
     </>
   );
