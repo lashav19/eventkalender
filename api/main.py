@@ -19,22 +19,46 @@ firebase_admin.initialize_app(cred, {
 app = Flask(__name__)
 CORS(app)
 
+@app.route('/api/test', methods=['POST'])
+def test():
+        data = request.json #for å hente parameter fra post requests
+        eventType = data['event']
+        eventPlace = data['place']
+        eventName = data['name']
+        eventStart = data['start']
+        eventSlutt = data['start']
+        eventDate = data['date']
+       
+
+
 app.config['CORS_HEADERS'] = 'Content-Type'
 @app.route('/api/create', methods=['POST'])
 def addevent():
     try:
         data = request.json #for å hente parameter fra post requests
-        eventType = data['event']
-        eventPlace = data['place']
-        eventName = data['name']
-        date = data[date]
+        eventType = data.get('event')
+        eventPlace = data.get('place')
+        eventName = data.get('name')
+        eventStart = data.get('start')
+        eventSlutt = data.get('slutt')
+        eventDate = data.get('dato')
+        vars = [eventType, eventPlace, eventName, eventStart, eventSlutt, eventDate]
+        for var in vars:
+            if var:
+                print(var)
+            else:
+                print("var not found")
+                abort(400)
 
-        event = {"name": eventName, "place": eventPlace, "type": eventType} #Format for hvordan det skal se ut
+
+        event = {"name": eventName, "place": eventPlace, "type": eventType, "start": eventStart, "slutt": eventSlutt, "dato": eventDate} #Format for hvordan det skal se ut
         ref = db.reference('/')
         ref.child('events').push(event)
 
+
         return jsonify({"message": "Event created successfully"}), 201
     except Exception as e:
+        print(e)
         return abort(400)
 
 

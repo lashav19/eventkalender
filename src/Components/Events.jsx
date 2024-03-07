@@ -29,7 +29,7 @@ export default function FetchEvents() {
 
   return (
     <>
-      <div className="container">
+      <div className="container w-50">
       {events.map(event => (
         <>
          <Link to={`/event/${event.id}`} className="text-decoration-none">

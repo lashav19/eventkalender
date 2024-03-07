@@ -19,7 +19,7 @@
   "scripts": {
     "start": "react-scripts start",
     "app": "npm run start && npm run start-api",
-    "start-api": "cd api && flask run -p 3001",
+    "start-api": "cd api && flask run -p 3001 --debug",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
