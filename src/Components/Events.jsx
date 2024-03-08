@@ -29,17 +29,18 @@ export default function FetchEvents() {
 
   return (
     <>
-      <div className="container w-50">
+      <div className="container">
       {events.map(event => (
         <>
-         <Link to={`/event/${event.id}`} className="text-decoration-none">
          <EventCard
         key={event.id}
         text={event.name} // Assigning the event name to text prop
         place={event.place} // Assigning the event place to place prop
+        date={event.dato}
+        start={event.start}
+        end={event.slutt}
         />
-         </Link>
-        
+    
         </>
       ))}
       {errors ? <><h2 className='m-5'>An error has occured</h2></> : false}
